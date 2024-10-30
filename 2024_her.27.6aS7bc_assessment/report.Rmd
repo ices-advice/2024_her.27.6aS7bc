@@ -1,0 +1,72 @@
+---
+output:
+  officedown::rdocx_document:
+    reference_num: true
+    number_sections: false
+    reference_docx: !expr system.file('rmarkdown', 'templates', 'stockReport', 'resources', 'reportTemplate.docx', package='icesdown')
+tags: [ICES her.27.6aS7bc HAWG 2024]
+---
+
+```{r knitr, echo=FALSE, message=FALSE}
+library(knitr)
+opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE,
+  fig.width=6, fig.height=5, out.width="90%", fig.pos='!hbt')
+library(officedown)
+library(officer)
+library(flextable)
+```
+
+<!-- LOAD pkgs and data -->
+
+```{r pkgs}
+library(ggplot2)
+```
+
+```{r data}
+summary <- read.csv("./report/summary.csv", col.names = c("Parameter", "Value"))
+length_calculations <- read.csv("./report/length_calculations.csv")
+```
+
+# Description:	Herring (Clupea harengus) in Division 6.a South (South of 56°00’N and West of 07°00’W) and 7.b-c (northwest and west of Ireland)
+
+## Section her.27.6aS7bc
+
+### Subsection
+
+
+
+<!-- EXAMPLES -->
+
+Length frequency plots for each year including mean length at first capture are shown in Figure \@ref(fig:figure).
+
+Details of the catch, TAC, advice, survey biomass and length based indicator parameters by year are shown in Table \@ref(tab:lbitable).
+
+A summary of the resulting catch advice is shown in Table \@ref(tab:chrtable).
+
+The advised catch, taking the stability clause into account, is `r summary[9,2]`
+
+
+## References
+
+<!-- TABLES -->
+
+\newpage
+
+```{r chrtable, tab.cap="Catch advice summary", tab.id = "chrtable"}
+autofit(flextable(summary))
+```
+
+\newpage
+
+```{r lbitable, tab.cap="catch, TAC, advice, survey biomass and length based indicator parameters by year", tab.id = "lbitable"}
+autofit(flextable(length_calculations))
+```
+
+
+<!-- FIGURES -->
+
+\newpage
+
+```{r figure, fig.cap="Stock in 27.6aS7bc Length Frequency plots by year."}
+include_graphics('./report/length_frequency_plots.png')
+```
